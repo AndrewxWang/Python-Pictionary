@@ -1,5 +1,5 @@
 from tkinter import *
-from PIL import ImageTk,Image, ImageDraw
+from PIL import ImageTk, Image, ImageDraw
 import PIL
 import os
 import time
@@ -8,12 +8,12 @@ root.title("Pictionary")
 root.geometry("675x400")
 finalCount = 0
 while True:
-    finalCount = input("How many rounds would you like to have?: ")
-    if (finalCount.isdigit()):
+    finalCount = input("How many rounds would you like to have? (even number): ")
+    if finalCount.isdigit() and int(finalCount)%2 == 0:
         print("<------------------>")
         break
     else:
-        print("Enter a number: ")
+        print("Enter a number (even number): ")
 print("Instructions:")
 print("Player 1 draws an object of their choice and enters the answer in the input box")
 print("Player 2 tries to guess the object; if they guess correctly, the get a point")
@@ -43,6 +43,7 @@ draw = ImageDraw.Draw(img)
 def checkAnswer():
     global answers
     global count
+    print("Answer: " + answers[count])
     if answers[count].lower() == guess.get().lower():
         correctAns()
     else:
@@ -103,9 +104,10 @@ def changePlayer():
 
 def printWinner():
     global scoreOne, scoreTwo
+    print("Player 1: " + str(scoreOne))
+    print("Player 2: " + str(scoreTwo))
     winner = Canvas(root, bg="gainsboro", height=1920, width=1080)
     winner.place(x=0,y=0)
-    
     finalScore = ""
     if scoreOne > scoreTwo:
         finalScore = 1
@@ -147,6 +149,7 @@ def createImage():
     submit = Button(root, text="submit", state="normal", command=lambda: saveAns())
     submit.place(x=310,y=360)
     inputAns = Entry(root, bd=5, textvariable=answer)
+    inputAns.config(show="*");
     inputAns.place(x=310,y=60)
     clearBtn['state'] = NORMAL
     clearBtn.place(x=10,y=360)
